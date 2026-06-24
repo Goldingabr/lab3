@@ -1,14 +1,13 @@
-﻿// ========== Задание 3. Полиморфизм (Фигуры) ==========
-using System;
+﻿using System;
 
 namespace FiguresTask
 {
     public abstract class Figure
     {
         public abstract double Area();
-        public virtual void ShowInfo()
+        public virtual void DisplayProperties()
         {
-            Console.WriteLine($"Фигура {GetType().Name}, площадь = {Area():F2}");
+            Console.WriteLine($"Фигура {GetType().Name}");
         }
         ~Figure()
         {
@@ -21,9 +20,9 @@ namespace FiguresTask
         public double Radius { get; set; }
         public Circle(double radius) => Radius = radius;
         public override double Area() => Math.PI * Radius * Radius;
-        public override void ShowInfo()
+        public override void DisplayProperties()
         {
-            Console.WriteLine($"Круг: радиус = {Radius:F2}, площадь = {Area():F2}");
+            Console.WriteLine($"Круг: радиус = {Radius:F2}");
         }
     }
 
@@ -39,18 +38,18 @@ namespace FiguresTask
             Height = height;
         }
         public override double Area() => Width * Height;
-        public override void ShowInfo()
+        public override void DisplayProperties()
         {
-            Console.WriteLine($"Прямоугольник: {Width:F2} x {Height:F2}, площадь = {Area():F2}");
+            Console.WriteLine($"Прямоугольник: ширина = {Width:F2}, высота = {Height:F2}");
         }
     }
 
     public class Square : Rectangle
     {
         public Square(double side) : base(side, side) { }
-        public override void ShowInfo()
+        public override void DisplayProperties()
         {
-            Console.WriteLine($"Квадрат: сторона = {Width:F2}, площадь = {Area():F2}");
+            Console.WriteLine($"Квадрат: сторона = {Width:F2}");
         }
     }
 
@@ -64,9 +63,9 @@ namespace FiguresTask
             AngleDegrees = angleDegrees;
         }
         public override double Area() => Side * Side * Math.Sin(AngleDegrees * Math.PI / 180.0);
-        public override void ShowInfo()
+        public override void DisplayProperties()
         {
-            Console.WriteLine($"Ромб: сторона = {Side:F2}, угол = {AngleDegrees:F1}°, площадь = {Area():F2}");
+            Console.WriteLine($"Ромб: сторона = {Side:F2}, угол = {AngleDegrees:F1}°");
         }
     }
 
@@ -102,7 +101,12 @@ namespace FiguresTask
 
                 Console.WriteLine("\n--- Демонстрация полиморфизма ---");
                 foreach (var fig in figures)
-                    fig.ShowInfo();
+                {
+                    // 1. Вывод всех свойств объекта
+                    fig.DisplayProperties();
+                    // 2. Явный вызов метода Area и вывод результата
+                    Console.WriteLine($"Площадь: {fig.Area():F2}\n");
+                }
             }
             catch (Exception ex)
             {
